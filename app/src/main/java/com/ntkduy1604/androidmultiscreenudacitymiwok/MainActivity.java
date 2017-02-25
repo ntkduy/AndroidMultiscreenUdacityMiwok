@@ -40,5 +40,41 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(numbersIntent);
             }
         });
+
+        //Find the View that shows the family category & Set a click listener on that View
+        TextView family = (TextView) findViewById(R.id.family);
+        family.setOnClickListener(new View.OnClickListener(){
+            // The code in this method will be executed when the numbers View is clicked on.
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(),"Open the list of family members", Toast.LENGTH_SHORT).show();
+                Intent familyIntent = new Intent(MainActivity.this, FamilyActivity.class);
+                startActivity(familyIntent);
+            }
+        });
+
+        //Find the View that shows the colors category & Set a click listener on that View
+        TextView colors = (TextView) findViewById(R.id.colors);
+        colors.setOnClickListener(new View.OnClickListener(){
+            // The code in this method will be executed when the numbers View is clicked on.
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(),"Open the list of colors", Toast.LENGTH_SHORT).show();
+                Intent colorsIntent = new Intent(MainActivity.this, ColorActivity.class);
+                startActivity(colorsIntent);
+            }
+        });
+
+        //Find the View that shows the phrases category & Set a click listener on that View
+        TextView phrases = (TextView) findViewById(R.id.phrases);
+        phrases.setOnClickListener(new View.OnClickListener(){
+            // The code in this method will be executed when the numbers View is clicked on.
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(),"Open the list of phrases", Toast.LENGTH_SHORT).show();
+                Intent phrasesIntent = new Intent(MainActivity.this, PhrasesActivity.class);
+                startActivity(phrasesIntent);
+            }
+        });
     }
 }
