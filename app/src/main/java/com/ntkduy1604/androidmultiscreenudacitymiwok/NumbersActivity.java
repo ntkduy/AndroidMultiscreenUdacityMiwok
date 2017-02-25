@@ -3,7 +3,9 @@ package com.ntkduy1604.androidmultiscreenudacitymiwok;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -28,17 +30,13 @@ public class NumbersActivity extends AppCompatActivity {
         words.add("nine");
         words.add("ten");
 
-        // Find the root view so we can add child views to it
-        LinearLayout  rootView = (LinearLayout) findViewById(R.id.activity_numbers);
+        // Create an ArrayAdapter variable with String data type
+        ArrayAdapter<String> itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, words);
 
-        for(int index = 0; index < words.size(); index++){
-            // Create a new TextView
-            TextView wordView = new TextView(this);
-            // Set the text to be word at the current index
-            wordView.setText(words.get(index));
-            // Add this TextView as another child to the root view of this layout
-            rootView.addView(wordView);
-            // Increment the index variable by 1
-        }
+        //Create a ListView variable
+        ListView listView = (ListView) findViewById(R.id.activity_numbers);
+
+        listView.setAdapter(itemsAdapter);
+
     }
 }
