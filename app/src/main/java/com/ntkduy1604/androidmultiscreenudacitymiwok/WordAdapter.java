@@ -7,12 +7,10 @@ package com.ntkduy1604.androidmultiscreenudacitymiwok;
  */
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -40,16 +38,16 @@ public class WordAdapter extends ArrayAdapter<Word> {
         Word currentWord = getItem(position);
 
         // Find the TextView in the list_item.xml layout with the ID version_name
-        TextView defaultTranslation = (TextView) listItemView.findViewById(R.id.default_text_view);
+        TextView defaultTextView = (TextView) listItemView.findViewById(R.id.default_text_view);
         // Get the version name from the current Word object and
         // set this text on the name TextView
-        defaultTranslation.setText(currentWord.getDefaultTranslation());
+        defaultTextView.setText(currentWord.getDefaultTranslation());
 
         // Find the TextView in the list_item.xml layout with the ID version_number
-        TextView miwokTranslation = (TextView) listItemView.findViewById(R.id.miwok_list_view);
+        TextView miworkTextView = (TextView) listItemView.findViewById(R.id.miwok_list_view);
         // Get the version number from the current Word object and
         // set this text on the number TextView
-        miwokTranslation.setText(currentWord.getMiwokTranslation());
+        miworkTextView.setText(currentWord.getMiwokTranslation());
 
 //        // Find the ImageView in the list_item.xml layout with the ID list_item_icon
 //        ImageView iconView = (ImageView) listItemView.findViewById(R.id.list_item_icon);
