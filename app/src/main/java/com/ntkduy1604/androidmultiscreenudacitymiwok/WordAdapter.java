@@ -7,6 +7,7 @@ package com.ntkduy1604.androidmultiscreenudacitymiwok;
  */
 
 import android.app.Activity;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +24,11 @@ import java.util.ArrayList;
  */
 public class WordAdapter extends ArrayAdapter<Word> {
 
-    public WordAdapter (Activity context, ArrayList<Word> word){
+    private int mImageResourceId;
+
+    public WordAdapter (Activity context, ArrayList<Word> word, int vImageResourceId){
         super(context, 0, word);
+        mImageResourceId = vImageResourceId;
     }
 
     @Override
@@ -62,6 +66,10 @@ public class WordAdapter extends ArrayAdapter<Word> {
             // Otherwise hide the ImageView (set visibility to GONE)
             imageView.setVisibility(View.GONE);
         }
+
+        View textContainer = (View) listItemView.findViewById(R.id.text_container);
+        int color = ContextCompat.getColor(getContext(), mImageResourceId);
+        textContainer.setBackgroundColor(color);
 
         // Return the whole list item layout (containing 2 TextViews and an ImageView)
         // so that it can be shown in the ListView

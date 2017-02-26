@@ -29,7 +29,7 @@ public class PhrasesActivity extends AppCompatActivity {
 
 
         // Create an ArrayAdapter variable with String data type
-        WordAdapter itemsAdapter = new WordAdapter(this, words);
+        WordAdapter itemsAdapter = new WordAdapter(this, words, R.color.category_phrases);
 
         //Create a ListView variable
         ListView listView = (ListView) findViewById(R.id.word_list);
