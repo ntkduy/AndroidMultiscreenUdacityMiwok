@@ -22,18 +22,22 @@ public class Word {
     private String mMiwokTranslation;
     // Miwok icon imaging
     private int mImageResourceId = NO_IMAGE_PROVIDED;
+    /** Audio resource ID for the word */
+    private int mAudioResourceId;
 
     // Constructor without image
-    public Word(String vDefaultTranslation, String vMiwokTranslation) {
+    public Word(String vDefaultTranslation, String vMiwokTranslation, int vAudioResourceId) {
         mDefaultTranslation = vDefaultTranslation;
         mMiwokTranslation = vMiwokTranslation;
+        mAudioResourceId = vAudioResourceId;
     }
 
     // Constructor with image
-    public Word(String vDefaultTranslation, String vMiwokTranslation, int imageResourceId) {
+    public Word(String vDefaultTranslation, String vMiwokTranslation, int imageResourceId, int vAudioResourceId) {
         mDefaultTranslation = vDefaultTranslation;
         mMiwokTranslation = vMiwokTranslation;
         mImageResourceId = imageResourceId;
+        mAudioResourceId = vAudioResourceId;
     }
 
     // Get the default translation of the word
@@ -56,5 +60,12 @@ public class Word {
      */
     public boolean hasImage() {
         return mImageResourceId != NO_IMAGE_PROVIDED;
+    }
+
+    /**
+     * Return the audio resource ID of the word.
+     */
+    public int getAudioResourceId() {
+        return mAudioResourceId;
     }
 }
