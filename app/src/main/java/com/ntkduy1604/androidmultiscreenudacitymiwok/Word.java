@@ -25,6 +25,16 @@ public class Word {
     /** Audio resource ID for the word */
     private int mAudioResourceId;
 
+    @Override
+    public String toString() {
+        return "Word{" +
+                "mAudioResourceId=" + mAudioResourceId +
+                ", mDefaultTranslation='" + mDefaultTranslation + '\'' +
+                ", mMiwokTranslation='" + mMiwokTranslation + '\'' +
+                ", mImageResourceId=" + mImageResourceId +
+                '}';
+    }
+
     // Constructor without image
     public Word(String vDefaultTranslation, String vMiwokTranslation, int vAudioResourceId) {
         mDefaultTranslation = vDefaultTranslation;
