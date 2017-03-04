@@ -1,12 +1,16 @@
 package com.ntkduy1604.androidmultiscreenudacitymiwok;
 
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
 public class NumbersActivity extends AppCompatActivity {
+    private MediaPlayer mMediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +35,19 @@ public class NumbersActivity extends AppCompatActivity {
         // Create an ArrayAdapter variable with String data type
         WordAdapter itemsAdapter = new WordAdapter(this, words, R.color.category_numbers);
 
-        //Create a ListView variable
+        // Create a ListView variable
         ListView listView = (ListView) findViewById(R.id.word_list);
 
         listView.setAdapter(itemsAdapter);
+
+        // Play same audio file for all words in NumbersActivity
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                mMediaPlayer = MediaPlayer.create(NumbersActivity.this, R.raw.number_one);
+                mMediaPlayer.start();
+            }
+        });
 
     }
 }

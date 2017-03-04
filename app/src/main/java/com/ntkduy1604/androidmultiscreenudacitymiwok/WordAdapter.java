@@ -7,6 +7,7 @@ package com.ntkduy1604.androidmultiscreenudacitymiwok;
  */
 
 import android.app.Activity;
+import android.media.MediaPlayer;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,11 +25,11 @@ import java.util.ArrayList;
  */
 public class WordAdapter extends ArrayAdapter<Word> {
 
-    private int mImageResourceId;
+    private int mColorResourceId;
 
-    public WordAdapter (Activity context, ArrayList<Word> word, int vImageResourceId){
+    public WordAdapter (Activity context, ArrayList<Word> word, int vColorResourceId){
         super(context, 0, word);
-        mImageResourceId = vImageResourceId;
+        mColorResourceId = vColorResourceId;
     }
 
     @Override
@@ -68,7 +69,7 @@ public class WordAdapter extends ArrayAdapter<Word> {
         }
 
         View textContainer = (View) listItemView.findViewById(R.id.text_container);
-        int color = ContextCompat.getColor(getContext(), mImageResourceId);
+        int color = ContextCompat.getColor(getContext(), mColorResourceId);
         textContainer.setBackgroundColor(color);
 
         // Return the whole list item layout (containing 2 TextViews and an ImageView)
