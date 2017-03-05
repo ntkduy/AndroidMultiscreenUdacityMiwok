@@ -1,5 +1,7 @@
 package com.ntkduy1604.androidmultiscreenudacitymiwok;
 
+import android.content.Context;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 public class PhrasesActivity extends AppCompatActivity {
     /** Handles playback of all the sound files */
     private MediaPlayer mMediaPlayer;
+    private AudioManager mAudioManager;
 
     /**
      * Find when the audio playing is finished
@@ -24,10 +27,47 @@ public class PhrasesActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * This listener gets triggered whenever the audio focus changes
+     * (i.e., we gain or lose audio focus because of another app or device).
+     */
+
+    private AudioManager.OnAudioFocusChangeListener mOnAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
+        @Override
+        public void onAudioFocusChange(int focusChange) {
+            if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT
+                    || focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
+                // Pause playback because your Audio Focus was
+                // temporarily stolen, but will be back soon.
+                // i.e. for a phone call
+                mMediaPlayer.pause();
+                mMediaPlayer.seekTo(0);
+            } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
+                // Stop playback, because you lost the Audio Focus.
+                // i.e. the user started some other playback app
+                // Remember to unregister your controls/buttons here.
+                // And release the kra — Audio Focus!
+                // You’re done.
+                releaseMediaPlayer();
+            } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
+                // Resume playback, because you hold the Audio Focus
+                // again!
+                // i.e. the phone call ended or the nav directions
+                // are finished
+                // If you implement ducking and lower the volume, be
+                // sure to return it to normal here, as well.
+                mMediaPlayer.start();
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.word_list);
+
+        // Create and setup the {@link AudioManager} to request audio focus
+        mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
         //Add array of Words To NumbersActivity
         final ArrayList<Word> words = new ArrayList<Word>();
@@ -64,12 +104,15 @@ public class PhrasesActivity extends AppCompatActivity {
 
                 // Create and setup the {@link MediaPlayer} for the audio resource associated
                 // with the current word
-                mMediaPlayer = MediaPlayer.create(PhrasesActivity.this, word.getAudioResourceId());
-
+                int result = mAudioManager.requestAudioFocus(mOnAudioFocusChangeListener,
+                        AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
                 // Start the audio file
-                mMediaPlayer.start();
+                if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                    mMediaPlayer = MediaPlayer.create(PhrasesActivity.this, word.getAudioResourceId());
+                    mMediaPlayer.start();
+                    mMediaPlayer.setOnCompletionListener(mCompletionListener);
+                }
 
-                mMediaPlayer.setOnCompletionListener(mCompletionListener);
             }
         });
     }
@@ -94,6 +137,7 @@ public class PhrasesActivity extends AppCompatActivity {
             // setting the media player to null is an easy way to tell that the media player
             // is not configured to play an audio file at the moment.
             mMediaPlayer = null;
+            mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener);
         }
     }
 }
